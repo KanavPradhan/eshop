@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./eshop-backend  # Path to Spring Boot project
+    container_name: backend
+    networks:
+      - my-app-network
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/eshopdb?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: PHqHB/f*5m8MF3T@
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend  # Path to React project
+    container_name: frontend
+    networks:
+      - my-app-network
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    networks:
+      - my-app-network
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: PHqHB/f*5m8MF3T@
+      MYSQL_DATABASE: eshopdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+networks:
+  my-app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

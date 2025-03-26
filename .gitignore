@@ -1,0 +1,13 @@
+# Node.js dependencies
+frontend/node_modules/
+frontend/build/
+
+# Java dependencies
+backend/target/
+backend/.idea/
+backend/.classpath
+backend/.project
+
+# General Git ignores
+.DS_Store
+.env
